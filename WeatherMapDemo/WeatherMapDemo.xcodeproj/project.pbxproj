@@ -21,6 +21,11 @@
 		FB416DF51952FC740097FAA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB416DF31952FC740097FAA3 /* InfoPlist.strings */; };
 		FB416DF71952FC740097FAA3 /* WeatherMapDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416DF61952FC740097FAA3 /* WeatherMapDemoTests.m */; };
 		FB416E0B1953034E0097FAA3 /* DFWeatherApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E0A1953034E0097FAA3 /* DFWeatherApiClient.m */; };
+		FB416E0E19530F3D0097FAA3 /* DFWeatherMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E0D19530F3D0097FAA3 /* DFWeatherMapViewController.m */; };
+		FB416E1019530F500097FAA3 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB416E0F19530F500097FAA3 /* Storyboard.storyboard */; };
+		FB416E12195311B00097FAA3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB416E11195311B00097FAA3 /* MapKit.framework */; };
+		FB416E15195316AF0097FAA3 /* DFImageOverlayRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E14195316AF0097FAA3 /* DFImageOverlayRenderer.m */; };
+		FB416E18195318470097FAA3 /* DFWeatherOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E17195318470097FAA3 /* DFWeatherOverlay.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,14 @@
 		FB416DF61952FC740097FAA3 /* WeatherMapDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeatherMapDemoTests.m; sourceTree = "<group>"; };
 		FB416E091953034E0097FAA3 /* DFWeatherApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFWeatherApiClient.h; sourceTree = "<group>"; };
 		FB416E0A1953034E0097FAA3 /* DFWeatherApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFWeatherApiClient.m; sourceTree = "<group>"; };
+		FB416E0C19530F3D0097FAA3 /* DFWeatherMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFWeatherMapViewController.h; sourceTree = "<group>"; };
+		FB416E0D19530F3D0097FAA3 /* DFWeatherMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFWeatherMapViewController.m; sourceTree = "<group>"; };
+		FB416E0F19530F500097FAA3 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		FB416E11195311B00097FAA3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FB416E13195316AF0097FAA3 /* DFImageOverlayRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFImageOverlayRenderer.h; sourceTree = "<group>"; };
+		FB416E14195316AF0097FAA3 /* DFImageOverlayRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFImageOverlayRenderer.m; sourceTree = "<group>"; };
+		FB416E16195318470097FAA3 /* DFWeatherOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFWeatherOverlay.h; sourceTree = "<group>"; };
+		FB416E17195318470097FAA3 /* DFWeatherOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFWeatherOverlay.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB416E12195311B00097FAA3 /* MapKit.framework in Frameworks */,
 				FB416DD41952FC730097FAA3 /* CoreGraphics.framework in Frameworks */,
 				FB416DD61952FC730097FAA3 /* UIKit.framework in Frameworks */,
 				FB416DD21952FC730097FAA3 /* Foundation.framework in Frameworks */,
@@ -104,6 +118,7 @@
 		FB416DD01952FC730097FAA3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB416E11195311B00097FAA3 /* MapKit.framework */,
 				FB416DD11952FC730097FAA3 /* Foundation.framework */,
 				FB416DD31952FC730097FAA3 /* CoreGraphics.framework */,
 				FB416DD51952FC730097FAA3 /* UIKit.framework */,
@@ -177,6 +192,9 @@
 		FB416E021952FF350097FAA3 /* viewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				FB416E0C19530F3D0097FAA3 /* DFWeatherMapViewController.h */,
+				FB416E0D19530F3D0097FAA3 /* DFWeatherMapViewController.m */,
+				FB416E0F19530F500097FAA3 /* Storyboard.storyboard */,
 			);
 			name = viewcontrollers;
 			path = "view controllers";
@@ -185,6 +203,8 @@
 		FB416E031952FF3A0097FAA3 /* custom controls */ = {
 			isa = PBXGroup;
 			children = (
+				FB416E13195316AF0097FAA3 /* DFImageOverlayRenderer.h */,
+				FB416E14195316AF0097FAA3 /* DFImageOverlayRenderer.m */,
 			);
 			path = "custom controls";
 			sourceTree = "<group>";
@@ -192,6 +212,8 @@
 		FB416E041952FF420097FAA3 /* bo */ = {
 			isa = PBXGroup;
 			children = (
+				FB416E16195318470097FAA3 /* DFWeatherOverlay.h */,
+				FB416E17195318470097FAA3 /* DFWeatherOverlay.m */,
 			);
 			path = bo;
 			sourceTree = "<group>";
@@ -308,6 +330,7 @@
 			files = (
 				FB416DDC1952FC730097FAA3 /* InfoPlist.strings in Resources */,
 				FB416DE41952FC730097FAA3 /* Images.xcassets in Resources */,
+				FB416E1019530F500097FAA3 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,8 +382,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB416E15195316AF0097FAA3 /* DFImageOverlayRenderer.m in Sources */,
 				FB416E0B1953034E0097FAA3 /* DFWeatherApiClient.m in Sources */,
 				FB416DE21952FC730097FAA3 /* DFAppDelegate.m in Sources */,
+				FB416E18195318470097FAA3 /* DFWeatherOverlay.m in Sources */,
+				FB416E0E19530F3D0097FAA3 /* DFWeatherMapViewController.m in Sources */,
 				FB416DDE1952FC730097FAA3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

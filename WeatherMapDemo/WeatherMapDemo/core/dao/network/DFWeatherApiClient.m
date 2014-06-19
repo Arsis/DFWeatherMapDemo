@@ -18,11 +18,12 @@ http://api.wunderground.com/api/0fd62d9f5e0841e9/satellite/image.gif?maxlat=47.7
 
 -(id)initWithBaseURL:(NSURL *)url {
     if (self = [super initWithBaseURL:url]) {
-        self.requestSerializer = [AFJSONRequestSerializer serializer];
-        [self.requestSerializer setValue:@"application/json, */*"
-                      forHTTPHeaderField:@"Content-Type"];
-        [self.requestSerializer setValue:@"application/json, */*"
-                      forHTTPHeaderField:@"Accept"];
+        self.responseSerializer = [AFImageResponseSerializer serializer];
+        self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"image/png", nil];
+//        [self.requestSerializer setValue:@"image/png, */*"
+//                      forHTTPHeaderField:@"Content-Type"];
+//        [self.requestSerializer setValue:@"image/png, */*"
+//                      forHTTPHeaderField:@"Accept"];
     }
     return self;
 }
@@ -36,6 +37,21 @@ http://api.wunderground.com/api/0fd62d9f5e0841e9/satellite/image.gif?maxlat=47.7
         _client = [[DFWeatherApiClient alloc]initWithBaseURL:[NSURL URLWithString:urlString]];
     });
     return _client;
+}
+
+-(void)getWeatherDataForRegionWithMinLatitude:(CLLocationDegrees)minLat minLongitude:(CLLocationDegrees)minLng maxLatitude:(CLLocationDegrees)maxLat maxLongitude:(CLLocationDegrees)maxLng width:(CGFloat)width height:(CGFloat)height completionHandler:(WeatherDataCompletionHandler)handler {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f",minLat,minLng,maxLat,maxLng,width,height]
+                         relativeToURL:self.baseURL];
+    
+    [self GET:[NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f&key=sat_ir4&basemap=0&proj=me",minLat,minLng,maxLat,maxLng,width,height]
+   parameters:nil
+      success:^(NSURLSessionDataTask *task, id responseObject) {
+          UIImage *image = (UIImage *)responseObject;
+          handler(image,nil);
+      } failure:^(NSURLSessionDataTask *task, NSError *error) {
+          handler(nil,error);
+      }];
 }
 
 @end
