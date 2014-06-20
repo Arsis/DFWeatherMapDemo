@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeatherMapDemo/presentation/view controllers/DFWeatherMapViewController.m"
-            timestampString = "424951532.275376"
+            timestampString = "424956765.473257"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "-updateOverlay"
             landmarkType = "5">
          </BreakpointContent>
@@ -57,7 +57,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
             endingLineNumber = "35"
-            landmarkName = "-asyncImageForURLString:completionHandler:"
+            landmarkName = "-cacheImage:forURLString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,7 +73,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "37"
             endingLineNumber = "37"
-            landmarkName = "-asyncImageForURLString:completionHandler:"
+            landmarkName = "-cacheImage:forURLString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

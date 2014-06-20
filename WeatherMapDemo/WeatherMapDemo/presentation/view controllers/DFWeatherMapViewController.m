@@ -20,6 +20,7 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
 @property (nonatomic, weak) DFWeatherApiClient *apiClient;
 @property (nonatomic, strong) DFTileCache *cache;
 @property (nonatomic) BOOL isMapLoaded;
+@property (nonatomic, strong) UIBarButtonItem *activityIndicatorBarButtonItem;
 @end
 
 @implementation DFWeatherMapViewController
@@ -38,9 +39,6 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    
     self.apiClient = [DFWeatherApiClient sharedApiClient];
     self.cache = [[DFTileCache alloc]init];
 }
@@ -49,17 +47,22 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
 {
     [super didReceiveMemoryWarning];
     self.cache = nil;
+    self.activityIndicatorBarButtonItem = nil;
+
 }
 
 #pragma mark - Custom navigation item
 
 - (void)setupActivityIndicator
 {
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:activityIndicatorView];
-    [activityIndicatorView startAnimating];
-    self.navigationItem.rightBarButtonItem = barButtonItem;
+    if (!self.activityIndicatorBarButtonItem) {
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:activityIndicatorView];
+        [activityIndicatorView startAnimating];
+        self.activityIndicatorBarButtonItem = barButtonItem;
+    }
+    self.navigationItem.rightBarButtonItem = self.activityIndicatorBarButtonItem;
 }
 
 - (void)updateOverlay {
@@ -73,9 +76,9 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
     __block DFWeatherOverlay *overlay = [[DFWeatherOverlay alloc]initWithULCoord:tlCoord
                                                                           CCoord:centerCoord
                                                                          BRCoord:brCoord];
-    NSString *urlString = [self.apiClient urlStringForWeatherDataForRegionWithMinLatitude:tlCoord.latitude
+    NSString *urlString = [self.apiClient urlStringForWeatherDataForRegionWithMinLatitude:brCoord.latitude
                                                                              minLongitude:tlCoord.longitude
-                                                                              maxLatitude:brCoord.latitude
+                                                                              maxLatitude:tlCoord.latitude
                                                                              maxLongitude:brCoord.longitude
                                                                                     width:CGRectGetWidth(self.mapView.bounds)
                                                                                    height:CGRectGetHeight(self.mapView.bounds)];
@@ -87,9 +90,9 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
                                                 }
                                                 else {
                                                     [self setupActivityIndicator];
-                                                    [self.apiClient getWeatherDataForRegionWithMinLatitude:tlCoord.latitude
+                                                    [self.apiClient getWeatherDataForRegionWithMinLatitude:brCoord.latitude
                                                                                               minLongitude:tlCoord.longitude
-                                                                                               maxLatitude:brCoord.latitude
+                                                                                               maxLatitude:tlCoord.latitude
                                                                                               maxLongitude:brCoord.longitude
                                                                                                      width:CGRectGetWidth(self.mapView.bounds)
                                                                                                     height:CGRectGetHeight(self.mapView.bounds)

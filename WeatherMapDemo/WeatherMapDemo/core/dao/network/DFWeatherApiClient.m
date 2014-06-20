@@ -54,7 +54,7 @@ static NSString *const kBaseURL = @"http://api.wunderground.com/api/";
 }
 
 -(NSString *)urlStringForWeatherDataForRegionWithMinLatitude:(CLLocationDegrees)minLat minLongitude:(CLLocationDegrees)minLng maxLatitude:(CLLocationDegrees)maxLat maxLongitude:(CLLocationDegrees)maxLng width:(CGFloat)width height:(CGFloat)height {
-    return [NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f&key=sat_vis&basemap=0&proj=me&borders=1",maxLat,maxLng,minLat,minLng,width,height];
+    return [NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f&key=sat_vis&basemap=0&proj=me&borders=0",maxLat,maxLng,minLat,minLng,width,height];
 }
 
 @end
