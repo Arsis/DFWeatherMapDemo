@@ -48,3 +48,9 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// NSDate-Extensions
+#define COCOAPODS_POD_AVAILABLE_NSDate_Extensions
+#define COCOAPODS_VERSION_MAJOR_NSDate_Extensions 0
+#define COCOAPODS_VERSION_MINOR_NSDate_Extensions 0
+#define COCOAPODS_VERSION_PATCH_NSDate_Extensions 1
+

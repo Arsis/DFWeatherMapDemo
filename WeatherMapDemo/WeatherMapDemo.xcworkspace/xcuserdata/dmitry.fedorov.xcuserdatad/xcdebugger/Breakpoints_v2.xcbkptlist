@@ -19,13 +19,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeatherMapDemo/core/dao/network/DFWeatherApiClient.m"
-            timestampString = "424877002.531585"
+            filePath = "WeatherMapDemo/presentation/view controllers/DFWeatherMapViewController.m"
+            timestampString = "424951532.275376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "-getWeatherDataForRegionWithMinLatitude:minLongitude:maxLatitude:maxLongitude:width:height:completionHandler:"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-updateOverlay"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeatherMapDemo/core/dao/network/DFWeatherApiClient.m"
-            timestampString = "424876997.681581"
+            timestampString = "424950369.353768"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-getWeatherDataForRegionWithMinLatitude:minLongitude:maxLatitude:maxLongitude:width:height:completionHandler:"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-urlStringForWeatherDataForRegionWithMinLatitude:minLongitude:maxLatitude:maxLongitude:width:height:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherMapDemo/core/dao/filesystem/DFTileCache.m"
+            timestampString = "424951768.368212"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-asyncImageForURLString:completionHandler:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherMapDemo/core/dao/filesystem/DFTileCache.m"
+            timestampString = "424951780.635604"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "-asyncImageForURLString:completionHandler:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

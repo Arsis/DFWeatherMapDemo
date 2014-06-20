@@ -8,12 +8,14 @@
 
 typedef void (^WeatherDataCompletionHandler)(UIImage *image, NSError *error);
 
-#import "AFHTTPSessionManager.h"
+#import "AFHTTPRequestOperationManager.h"
 @import CoreLocation;
-@interface DFWeatherApiClient : AFHTTPSessionManager
+@interface DFWeatherApiClient : AFHTTPRequestOperationManager
 
 +(instancetype)sharedApiClient;
 
 -(void)getWeatherDataForRegionWithMinLatitude:(CLLocationDegrees)minLat minLongitude:(CLLocationDegrees)minLng maxLatitude:(CLLocationDegrees)maxLat maxLongitude:(CLLocationDegrees)maxLng width:(CGFloat)width height:(CGFloat)height completionHandler:(WeatherDataCompletionHandler)handler;
+
+-(NSString *)urlStringForWeatherDataForRegionWithMinLatitude:(CLLocationDegrees)minLat minLongitude:(CLLocationDegrees)minLng maxLatitude:(CLLocationDegrees)maxLat maxLongitude:(CLLocationDegrees)maxLng width:(CGFloat)width height:(CGFloat)height;
 
 @end

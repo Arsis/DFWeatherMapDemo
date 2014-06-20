@@ -10,9 +10,7 @@
 
 static NSString *const kWeatherApiKey = @"0fd62d9f5e0841e9";
 static NSString *const kBaseURL = @"http://api.wunderground.com/api/";
-/*
-http://api.wunderground.com/api/0fd62d9f5e0841e9/satellite/image.gif?maxlat=47.709&maxlon=-69.263&minlat=31.596&minlon=-97.388&width=640&height=480&key=sat_ir4_bottom>t=107&timelabel=1&timelabel.x=470&timelabel.y=41&proj=me
-*/
+
 @implementation DFWeatherApiClient
 
 
@@ -20,10 +18,6 @@ http://api.wunderground.com/api/0fd62d9f5e0841e9/satellite/image.gif?maxlat=47.7
     if (self = [super initWithBaseURL:url]) {
         self.responseSerializer = [AFImageResponseSerializer serializer];
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"image/png", nil];
-//        [self.requestSerializer setValue:@"image/png, */*"
-//                      forHTTPHeaderField:@"Content-Type"];
-//        [self.requestSerializer setValue:@"image/png, */*"
-//                      forHTTPHeaderField:@"Accept"];
     }
     return self;
 }
@@ -41,17 +35,26 @@ http://api.wunderground.com/api/0fd62d9f5e0841e9/satellite/image.gif?maxlat=47.7
 
 -(void)getWeatherDataForRegionWithMinLatitude:(CLLocationDegrees)minLat minLongitude:(CLLocationDegrees)minLng maxLatitude:(CLLocationDegrees)maxLat maxLongitude:(CLLocationDegrees)maxLng width:(CGFloat)width height:(CGFloat)height completionHandler:(WeatherDataCompletionHandler)handler {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f",minLat,minLng,maxLat,maxLng,width,height]
-                         relativeToURL:self.baseURL];
+    NSString *urlString = [self urlStringForWeatherDataForRegionWithMinLatitude:minLat
+                                                                   minLongitude:minLng
+                                                                    maxLatitude:maxLat
+                                                                   maxLongitude:maxLng
+                                                                          width:width
+                                                                         height:height];
     
-    [self GET:[NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f&key=sat_ir4&basemap=0&proj=me",minLat,minLng,maxLat,maxLng,width,height]
+    [self GET:urlString
    parameters:nil
-      success:^(NSURLSessionDataTask *task, id responseObject) {
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
           UIImage *image = (UIImage *)responseObject;
           handler(image,nil);
-      } failure:^(NSURLSessionDataTask *task, NSError *error) {
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           handler(nil,error);
       }];
+}
+
+-(NSString *)urlStringForWeatherDataForRegionWithMinLatitude:(CLLocationDegrees)minLat minLongitude:(CLLocationDegrees)minLng maxLatitude:(CLLocationDegrees)maxLat maxLongitude:(CLLocationDegrees)maxLng width:(CGFloat)width height:(CGFloat)height {
+    return [NSString stringWithFormat:@"satellite/image.png?maxlat=%f&maxlon=%f&minlat=%f&minlon=%f&width=%f&height=%f&key=sat_vis&basemap=0&proj=me&borders=1",maxLat,maxLng,minLat,minLng,width,height];
 }
 
 @end

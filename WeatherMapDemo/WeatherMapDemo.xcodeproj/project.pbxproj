@@ -26,6 +26,8 @@
 		FB416E12195311B00097FAA3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB416E11195311B00097FAA3 /* MapKit.framework */; };
 		FB416E15195316AF0097FAA3 /* DFImageOverlayRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E14195316AF0097FAA3 /* DFImageOverlayRenderer.m */; };
 		FB416E18195318470097FAA3 /* DFWeatherOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E17195318470097FAA3 /* DFWeatherOverlay.m */; };
+		FB416E1B19540E380097FAA3 /* DFTileCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E1A19540E380097FAA3 /* DFTileCache.m */; };
+		FB416E1E195437D50097FAA3 /* DFImgeOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB416E1D195437D50097FAA3 /* DFImgeOverlayView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,10 @@
 		FB416E14195316AF0097FAA3 /* DFImageOverlayRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFImageOverlayRenderer.m; sourceTree = "<group>"; };
 		FB416E16195318470097FAA3 /* DFWeatherOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFWeatherOverlay.h; sourceTree = "<group>"; };
 		FB416E17195318470097FAA3 /* DFWeatherOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFWeatherOverlay.m; sourceTree = "<group>"; };
+		FB416E1919540E380097FAA3 /* DFTileCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTileCache.h; sourceTree = "<group>"; };
+		FB416E1A19540E380097FAA3 /* DFTileCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTileCache.m; sourceTree = "<group>"; };
+		FB416E1C195437D50097FAA3 /* DFImgeOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFImgeOverlayView.h; sourceTree = "<group>"; };
+		FB416E1D195437D50097FAA3 /* DFImgeOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFImgeOverlayView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +209,8 @@
 		FB416E031952FF3A0097FAA3 /* custom controls */ = {
 			isa = PBXGroup;
 			children = (
+				FB416E1C195437D50097FAA3 /* DFImgeOverlayView.h */,
+				FB416E1D195437D50097FAA3 /* DFImgeOverlayView.m */,
 				FB416E13195316AF0097FAA3 /* DFImageOverlayRenderer.h */,
 				FB416E14195316AF0097FAA3 /* DFImageOverlayRenderer.m */,
 			);
@@ -246,6 +254,8 @@
 		FB416E081952FF580097FAA3 /* filesystem */ = {
 			isa = PBXGroup;
 			children = (
+				FB416E1919540E380097FAA3 /* DFTileCache.h */,
+				FB416E1A19540E380097FAA3 /* DFTileCache.m */,
 			);
 			path = filesystem;
 			sourceTree = "<group>";
@@ -384,10 +394,12 @@
 			files = (
 				FB416E15195316AF0097FAA3 /* DFImageOverlayRenderer.m in Sources */,
 				FB416E0B1953034E0097FAA3 /* DFWeatherApiClient.m in Sources */,
+				FB416E1B19540E380097FAA3 /* DFTileCache.m in Sources */,
 				FB416DE21952FC730097FAA3 /* DFAppDelegate.m in Sources */,
 				FB416E18195318470097FAA3 /* DFWeatherOverlay.m in Sources */,
 				FB416E0E19530F3D0097FAA3 /* DFWeatherMapViewController.m in Sources */,
 				FB416DDE1952FC730097FAA3 /* main.m in Sources */,
+				FB416E1E195437D50097FAA3 /* DFImgeOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +520,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeatherMapDemo/WeatherMapDemo-Prefix.pch";
 				INFOPLIST_FILE = "WeatherMapDemo/WeatherMapDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -522,6 +535,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeatherMapDemo/WeatherMapDemo-Prefix.pch";
 				INFOPLIST_FILE = "WeatherMapDemo/WeatherMapDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

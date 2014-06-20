@@ -10,9 +10,16 @@
 #import "DFWeatherApiClient.h"
 #import "DFWeatherOverlay.h"
 #import "DFImageOverlayRenderer.h"
+#import "DFImgeOverlayView.h"
+#import "DFTileCache.h"
+
+static NSString *const kOverlayId = @"com.df.kOverlayId";
+
 @interface DFWeatherMapViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, weak) DFWeatherApiClient *apiClient;
+@property (nonatomic, strong) DFTileCache *cache;
+@property (nonatomic) BOOL isMapLoaded;
 @end
 
 @implementation DFWeatherMapViewController
@@ -26,17 +33,33 @@
     return self;
 }
 
+#pragma mark - UIViewController lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    
     self.apiClient = [DFWeatherApiClient sharedApiClient];
-    // Do any additional setup after loading the view.
+    self.cache = [[DFTileCache alloc]init];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.cache = nil;
+}
+
+#pragma mark - Custom navigation item
+
+- (void)setupActivityIndicator
+{
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:activityIndicatorView];
+    [activityIndicatorView startAnimating];
+    self.navigationItem.rightBarButtonItem = barButtonItem;
 }
 
 - (void)updateOverlay {
@@ -50,46 +73,82 @@
     __block DFWeatherOverlay *overlay = [[DFWeatherOverlay alloc]initWithULCoord:tlCoord
                                                                           CCoord:centerCoord
                                                                          BRCoord:brCoord];
-    
-    [self.apiClient getWeatherDataForRegionWithMinLatitude:brCoord.latitude
-                                              minLongitude:brCoord.longitude
-                                               maxLatitude:tlCoord.latitude
-                                              maxLongitude:tlCoord.longitude
-                                                     width:CGRectGetWidth(self.mapView.bounds)
-                                                    height:CGRectGetHeight(self.mapView.bounds)
-                                         completionHandler:^(UIImage *image, NSError *error) {
-                                             overlay.image = image;
-                                             [self.mapView removeOverlays:self.mapView.overlays];
-                                             [self.mapView addOverlay:overlay];
-                                         }];
+    NSString *urlString = [self.apiClient urlStringForWeatherDataForRegionWithMinLatitude:tlCoord.latitude
+                                                                             minLongitude:tlCoord.longitude
+                                                                              maxLatitude:brCoord.latitude
+                                                                             maxLongitude:brCoord.longitude
+                                                                                    width:CGRectGetWidth(self.mapView.bounds)
+                                                                                   height:CGRectGetHeight(self.mapView.bounds)];
+    [self.cache asyncImageForURLString:urlString
+                      completionHandler:^(UIImage *cachedImage) {
+                                    if (cachedImage) {
+                                                    overlay.image = cachedImage;
+                                                    [self addOverlay:overlay];
+                                                }
+                                                else {
+                                                    [self setupActivityIndicator];
+                                                    [self.apiClient getWeatherDataForRegionWithMinLatitude:tlCoord.latitude
+                                                                                              minLongitude:tlCoord.longitude
+                                                                                               maxLatitude:brCoord.latitude
+                                                                                              maxLongitude:brCoord.longitude
+                                                                                                     width:CGRectGetWidth(self.mapView.bounds)
+                                                                                                    height:CGRectGetHeight(self.mapView.bounds)
+                                                                                         completionHandler:^(UIImage *image, NSError *error) {
+                                                                                             self.navigationItem.rightBarButtonItem = nil;
+                                                                                             overlay.image = image;
+                                                                                             [self.cache cacheImage:image
+                                                                                                       forURLString:urlString];
+                                                                                             [self addOverlay:overlay];
+                                                                                         }];
+                                                }
+                                            }];
 }
 
--(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {
-    
+-(void)addOverlay:(id <MKOverlay>)overlay {
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self.mapView addOverlay:overlay];
 }
 
--(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
-    DFImageOverlayRenderer *view = (DFImageOverlayRenderer *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"mapView"];
+#pragma mark - MKMapViewDelegate methods
+
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay { //ios7
+    DFImageOverlayRenderer *view = (DFImageOverlayRenderer *)[mapView dequeueReusableAnnotationViewWithIdentifier:kOverlayId];
     if (!view) {
         view = [[DFImageOverlayRenderer alloc] initWithOverlay:overlay];
-        view.image = ((DFWeatherOverlay *)overlay).image;
     }
+    view.image = ((DFWeatherOverlay *)overlay).image;
     return view;
 }
 
+-(MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay { //ios < 7
+    DFImgeOverlayView *overlayView = (DFImgeOverlayView *)[mapView dequeueReusableAnnotationViewWithIdentifier:kOverlayId];
+    if (!overlayView) {
+        overlayView = [[DFImgeOverlayView alloc] initWithOverlay:overlay];
+    }
+    overlayView.image = ((DFWeatherOverlay *)overlay).image;
+    return overlayView;
+}
+
+-(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {
+    if (NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_6_1 && !self.isMapLoaded) {
+        self.isMapLoaded = YES;
+        [self updateOverlay];
+    }
+}
+
+-(void)mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered {
+    if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1 && !self.isMapLoaded) {
+        self.isMapLoaded = YES;
+        [self updateOverlay];
+    }
+}
+
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self updateOverlay];
+    if (self.isMapLoaded) {
+        [self updateOverlay];
+    }
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
