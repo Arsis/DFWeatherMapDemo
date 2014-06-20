@@ -48,7 +48,6 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
     [super didReceiveMemoryWarning];
     self.cache = nil;
     self.activityIndicatorBarButtonItem = nil;
-
 }
 
 #pragma mark - Custom navigation item
@@ -64,6 +63,8 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
     }
     self.navigationItem.rightBarButtonItem = self.activityIndicatorBarButtonItem;
 }
+
+#pragma mark - Overlay fetching/placing
 
 - (void)updateOverlay {
     CLLocationCoordinate2D tlCoord = [_mapView convertPoint:_mapView.frame.origin
@@ -115,20 +116,28 @@ static NSString *const kOverlayId = @"com.df.kOverlayId";
 #pragma mark - MKMapViewDelegate methods
 
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay { //ios7
-    DFImageOverlayRenderer *view = (DFImageOverlayRenderer *)[mapView dequeueReusableAnnotationViewWithIdentifier:kOverlayId];
-    if (!view) {
-        view = [[DFImageOverlayRenderer alloc] initWithOverlay:overlay];
-    }
-    view.image = ((DFWeatherOverlay *)overlay).image;
-    return view;
+    return [self overlayOrRendererWithMapView:mapView
+                                      overlay:overlay];
 }
 
 -(MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay { //ios < 7
-    DFImgeOverlayView *overlayView = (DFImgeOverlayView *)[mapView dequeueReusableAnnotationViewWithIdentifier:kOverlayId];
-    if (!overlayView) {
-        overlayView = [[DFImgeOverlayView alloc] initWithOverlay:overlay];
+    return [self overlayOrRendererWithMapView:mapView
+                                      overlay:overlay];
+}
+
+-(id)overlayOrRendererWithMapView:(MKMapView *)mapView overlay:(id<MKOverlay>)overlay {
+    Class class;
+    if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) {
+        class = [DFImageOverlayRenderer class];
     }
-    overlayView.image = ((DFWeatherOverlay *)overlay).image;
+    else {
+        class = [DFImgeOverlayView class];
+    }
+    id overlayView = [mapView dequeueReusableAnnotationViewWithIdentifier:kOverlayId];
+    if  (!overlayView ) {
+        overlayView  = [[class alloc]initWithOverlay:overlay];
+    }
+    [overlayView setImage:((DFWeatherOverlay *)overlay).image];
     return overlayView;
 }
 

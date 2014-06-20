@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Weather Map View Controller - Current forecast-->
+        <!--Weather Map View Controller - Current weather-->
         <scene sceneID="gYT-ZH-3ZS">
             <objects>
                 <viewController id="lrJ-7X-Q0k" customClass="DFWeatherMapViewController" sceneMemberID="viewController">
@@ -23,7 +23,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Current forecast" id="bKg-NA-Y2k"/>
+                    <navigationItem key="navigationItem" title="Current weather" id="bKg-NA-Y2k"/>
                     <connections>
                         <outlet property="mapView" destination="LYL-12-pwW" id="UQM-tP-aQo"/>
                     </connections>
